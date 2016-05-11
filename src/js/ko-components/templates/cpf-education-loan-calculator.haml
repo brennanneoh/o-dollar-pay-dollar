@@ -1,0 +1,13 @@
+%form
+  %p
+    %label Loan Amount
+    %input#loan-amount{ :type => 'number', 'data-bind' => 'value: loanAmount' }
+  %p
+    %label Yearly Interest Rate
+    %input#yearly-interest-rate{ :type => 'number', 'data-bind' => 'value: yearlyInterestRate' }
+  %p
+    %label Monthly Installment
+    %input#monthly-installment{ :type => 'number', 'data-bind' => 'value: monthlyInstallment' }
+  %p
+    %label Loan Repayment Period
+    %span#loan-repayment-period{ 'data-bind' => 'text: loanRepaymentPeriod' }

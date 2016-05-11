@@ -13,14 +13,24 @@ module.exports = (grunt) ->
         flatten: false
         cwd: 'spec/js'
         src: ["**/*.coffee"]
-        dest: 'build/js'
+        dest: 'build/spec/js'
         ext: '.js'
 
     haml:
       dist:
-        files:
-          'build/index.html': 'src/index.haml'
-
+        expand: true
+        flatten: false
+        cwd: 'src'
+        src: ['**/*.haml']
+        dest: 'build'
+        ext: '.html'
+      spec:
+        expand: true
+        flatten: false
+        cwd: 'spec'
+        src: ['**/*.haml']
+        dest: 'build'
+        ext: '.html'
     copy:
       main:
         expand: true
@@ -33,20 +43,25 @@ module.exports = (grunt) ->
 
     jasmine:
       spec:
-        src: 'build/**/main.js'
+        src: 'build/js/ko-components/**/*.js'
         options:
-          specs: 'build/js/**/*-spec.js'
-          vendor: [
+          specs: 'build/spec/js/**/*.js'
+          helpers: [
+            'build/js/lib/shared-config.js'
             'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js'
             'build/js/lib/jasmine-jquery.js'
+          ]
+          template: 'spec/requirejs-runner.tmpl'
+          vendor: [
+            'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js'
           ]
 
     watch:
       coffee:
-        files: ["./js/**/*.coffee"]
+        files: ["src/js/**/*.coffee"]
         tasks: ["compile:coffee"]
       haml:
-        files: ["./index.haml"]
+        files: ["src/**/*.haml"]
         tasks: ["compile:haml"]
       static:
         files: ['./res/*', './css/*', './img/*']
@@ -64,8 +79,8 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-haml2html'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-connect'
-  grunt.loadNpmTasks('grunt-contrib-jasmine')
+  grunt.loadNpmTasks 'grunt-contrib-jasmine'
 
   grunt.registerTask 'compile', ['coffee', 'haml', 'copy']
-  grunt.registerTask 'test', ['coffee', 'haml', 'copy:spec', 'jasmine']
-  grunt.registerTask 'server', ['connect:server', 'watch']
+  grunt.registerTask 'test', ['compile', 'jasmine']
+  grunt.registerTask 'server', ['compile', 'connect:server', 'watch']
