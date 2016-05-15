@@ -31,6 +31,18 @@ module.exports = (grunt) ->
         src: ['**/*.haml']
         dest: 'build'
         ext: '.html'
+    sass:
+      dist:
+        options:
+          style: 'expanded'
+          trace: true
+        files: [
+          expand: true
+          cwd: 'src/css'
+          src: ['**/*.scss']
+          dest: 'build/css'
+          ext: '.css'
+        ]
     copy:
       main:
         expand: true
@@ -63,6 +75,9 @@ module.exports = (grunt) ->
       haml:
         files: ["src/**/*.haml"]
         tasks: ["compile:haml"]
+      scss:
+        files: ['src/css/*']
+        tasks: ['compile:scss']
       static:
         files: ['./res/*', './css/*', './img/*']
         tasks: ["compile:copy"]
@@ -80,7 +95,8 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-connect'
   grunt.loadNpmTasks 'grunt-contrib-jasmine'
+  grunt.loadNpmTasks 'grunt-contrib-sass'
 
-  grunt.registerTask 'compile', ['coffee', 'haml', 'copy']
+  grunt.registerTask 'compile', ['coffee', 'haml', 'copy', 'sass']
   grunt.registerTask 'test', ['compile', 'jasmine']
   grunt.registerTask 'server', ['compile', 'connect:server', 'watch']

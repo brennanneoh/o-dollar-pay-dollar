@@ -1,13 +1,15 @@
-%form
-  %p
-    %label Loan Amount
-    %input#loan-amount{ :type => 'number', 'data-bind' => 'value: loanAmount' }
-  %p
-    %label Yearly Interest Rate
-    %input#yearly-interest-rate{ :type => 'number', 'data-bind' => 'value: yearlyInterestRate' }
-  %p
-    %label Monthly Installment
-    %input#monthly-installment{ :type => 'number', 'data-bind' => 'value: monthlyInstallment' }
-  %p
-    %label Loan Repayment Period
-    %span#loan-repayment-period{ 'data-bind' => 'text: loanRepaymentPeriod' }
+%h2 CPF Education Loan Calculator
+.clearfix
+  %form
+    .col.col-6
+      %label Loan Amount
+      %input#loan-amount{ :type => 'number', 'data-bind' => 'value: loanAmount' }
+    .col.col-6
+      %label Yearly Interest Rate
+      %input#yearly-interest-rate{ :type => 'number', 'data-bind' => 'value: yearlyInterestRate' }
+    .col.col-6
+      %label Monthly Installment
+      %input#monthly-installment{ :type => 'number', 'data-bind' => 'value: monthlyInstallment' }
+    .col.col-6
+      %label Loan Repayment Period
+      %span#loan-repayment-period{ 'data-bind' => 'text: loanRepaymentPeriod' }
