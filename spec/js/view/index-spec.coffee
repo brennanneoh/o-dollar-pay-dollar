@@ -1,17 +1,27 @@
-describe 'index.html', ->
+define ['lodash'], (_) ->
+  describe 'cpf-education-loan-calculator-template', ->
 
-  beforeEach ->
-    jasmine.getFixtures().fixturesPath = 'build'
-    loadFixtures('index.html')
+    beforeEach ->
+      jasmine.getFixtures().fixturesPath = 'build/js/ko-components/templates'
+      loadFixtures('cpf-education-loan-calculator.html')
 
-  it 'should have a <h1> element', ->
-    expect($('h1')[0]).toBeInDOM()
+    itShouldBehaveLikeNumberInput = (element) ->
+      it 'should be number input', ->
+        expect($(element)).toEqual 'INPUT'
+        expect($(element)).toHaveAttr 'type', 'number'
 
-  it 'should have a non-empty <h1> element', ->
-    expect($('h1')[0]).not.toBeEmpty()
+    itShouldBehaveLikeObservableDataBind = (element, binding) ->
+      it 'should have a knockout observable binding', ->
+        expect(_.includes($(element).attr('data-bind'), binding)).toEqual true
 
-  it 'should have a <p> element', ->
-    expect($('p')[0]).toBeInDOM()
+    describe 'Loan Amount', ->
+        itShouldBehaveLikeNumberInput '#loan-amount'
+        itShouldBehaveLikeObservableDataBind '#loan-amount', 'value: loanAmount'
 
-  it 'should have a non-empty <p> element', ->
-    expect($('p')[0]).not.toBeEmpty()
+    describe 'Yearly Interest Rate', ->
+        itShouldBehaveLikeNumberInput '#yearly-interest-rate'
+        itShouldBehaveLikeObservableDataBind '#yearly-interest-rate', 'value: yearlyInterestRate'
+
+    describe 'Monthly Installment', ->
+        itShouldBehaveLikeNumberInput '#monthly-installment'
+        itShouldBehaveLikeObservableDataBind '#monthly-installment', 'value: monthlyInstallment'
