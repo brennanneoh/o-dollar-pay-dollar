@@ -1,4 +1,4 @@
-define ['knockout'], (ko) ->
+define ['knockout', 'lodash'], (ko, _) ->
   describe 'OOPD.KoComponents.ViewModels.CpfEducationLoanCalculator', ->
     viewModel = new ODPD.KoComponents.ViewModels.CpfEducationLoanCalculator()
 
@@ -20,13 +20,23 @@ define ['knockout'], (ko) ->
 
     describe 'viewModel', ->
       it 'should be valid when loaded', ->
-        expect(ko.validatedObservable(viewModel).isValid()).toEqual true
+        expect(ko.validatedObservable(viewModel).isValid()).toEqual false
 
     describe 'loanAmount', ->
       itBehavesLikeFloatField viewModel.loanAmount
+      itBehavesLikeMandatoryField viewModel.loanAmount
 
     describe 'yearlyInterestRate', ->
       itBehavesLikeFloatField viewModel.yearlyInterestRate
+      itBehavesLikeMandatoryField viewModel.yearlyInterestRate
 
     describe 'monthlyInstallment', ->
       itBehavesLikeFloatField viewModel.monthlyInstallment
+      itBehavesLikeMandatoryField viewModel.monthlyInstallment
+
+    describe 'loanPaymentPeriod', ->
+      it 'should calculate the loan payment period', ->
+        viewModel.loanAmount 30000
+        viewModel.yearlyInterestRate 2.5
+        viewModel.monthlyInstallment 600
+        expect(viewModel.loanRepaymentPeriod()).toEqual 4.4
