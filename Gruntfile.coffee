@@ -24,7 +24,7 @@ module.exports = (grunt) ->
         src: ['**/*.haml']
         dest: 'build'
         ext: '.html'
-      dist:
+      spec:
         expand: true
         flatten: false
         cwd: 'spec'
@@ -46,7 +46,11 @@ module.exports = (grunt) ->
         src: 'build/js/ko-components/**/*.js'
         options:
           specs: 'build/spec/js/**/*.js'
-          helpers: 'build/js/lib/shared-config.js'
+          helpers: [
+            'build/js/lib/shared-config.js'
+            'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js'
+            'build/js/lib/jasmine-jquery.js'
+          ]
           template: 'spec/requirejs-runner.tmpl'
           vendor: [
             'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js'
