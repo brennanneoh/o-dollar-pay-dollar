@@ -32,6 +32,7 @@
     "grunt-contrib-jasmine": "^1.0.3",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-haml2html": "^0.3.0",
+    "grunt-template-jasmine-requirejs": "^0.2.3",
     "jasmine-jquery": "^2.1.1"
   }
 }
